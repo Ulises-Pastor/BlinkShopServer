@@ -9,7 +9,7 @@
             "url": "https://opensource.org/licenses/MIT"
         }
     },
-    "host": "https://blinkserver.onrender.com",
+    "host": "blinkserver.onrender.com",
     "basePath": "",
     "tags": [
         {
