@@ -39,7 +39,7 @@ class UsuariosController
 
     public async iniciarSesion(req: Request, res: Response): Promise<void> {
         const parametros = req.body;
-        var consulta = `SELECT nombre, correo, rol FROM usuarios WHERE correo = '${parametros.correo}' and contrasena = '${parametros.contrasena}'`;
+        var consulta = `SELECT nombre, correo, id, rol FROM usuarios WHERE correo = '${parametros.correo}' and contrasena = '${parametros.contrasena}'`;
         const resp = await pool.query(consulta);
         if(resp.length > 0){
             res.json(resp);

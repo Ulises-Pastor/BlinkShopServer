@@ -258,7 +258,20 @@
                 "tags": ["Usuarios"],
                 "responses": {
                     "201": {
-                        "description": "OK"
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "nombre": "Prueba Clientes",
+                                    "correo": "cliente@gmail.com",
+                                    "id": 6,
+                                    "rol": 4
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/usuarioLogueado"
+                        }
                     },
                     "403": {
                         "description": "Prohibido"
@@ -1120,12 +1133,14 @@
                                     "Clave": "blu-001",
                                     "Prenda": "Blusa corte en V con hombros descubiertos",
                                     "Talla": "Mediana",
+                                    "id_talla": 4,
                                     "Unidades": 5
                                 },
                                 {
                                     "Clave": "blu-001",
                                     "Prenda": "Blusa corte en V con hombros descubiertos",
                                     "Talla": "Grande",
+                                    "id_talla": 5,
                                     "Unidades": 2
                                 }
                             ]
@@ -1164,6 +1179,7 @@
                                     "Clave": "blu-002",
                                     "Prenda": "Blusa cuello de tortuga de estambre para dama",
                                     "Talla": "Grande",
+                                    "id_talla": 4,
                                     "Unidades": 10
                                 }
                             ]
@@ -2035,6 +2051,27 @@
                 "contrasena": {
                     "type": "string",
                     "description": "Recibe la contraseña del usuario."
+                }
+            }
+        },
+        "usuarioLogueado": {
+            "type": "object",
+            "properties": {
+                "nombre": {
+                    "type": "string",
+                    "description": "Guarda el nombre del usuario.."
+                },
+                "correo": {
+                    "type": "string",
+                    "description": "Guarda el correo del usuario."
+                },
+                "id": {
+                    "type": "number",
+                    "description": "Guarda el id del usuario."
+                },
+                "rol": {
+                    "type": "number",
+                    "description": "Guarda el id del rol del usuario."
                 }
             }
         },
