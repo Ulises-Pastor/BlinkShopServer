@@ -323,14 +323,18 @@
                             [
                                 {
                                     "Prenda": "Blusa corte en V con hombros descubiertos",
+                                    "clave_prenda": "blu-001",
                                     "Talla": "Mediana",
+                                    "id_talla": 6,
                                     "unidades": 3,
                                     "precio_unitario": 135.25,
                                     "precio_total": 405.75
                                 },
                                 {
                                     "Prenda": "Pantalón recto tipo mezclilla elástico para dama",
+                                    "clave_prenda": "pan-001",
                                     "Talla": "Chica",
+                                    "id_talla": 6,
                                     "unidades": 1,
                                     "precio_unitario": 278.98,
                                     "precio_total": 278.98
@@ -394,7 +398,7 @@
                 }
             }
         },
-        "/api/bolsas/actualizarPrenda/{clave}":
+        "/api/bolsasDeCompra/actualizarPrenda/{clave}":
         {
             "put":
             {
@@ -442,7 +446,7 @@
                 }
             }
         },
-        "/api/bolsas/eliminarPrenda/{clave}":
+        "/api/bolsasDeCompra/eliminarPrenda/{clave}":
         {
             "delete": {
                 "tags": ["Bolsas de Compra"],
@@ -2784,20 +2788,25 @@
             "type": "object",
             "properties":
             {
-                "id_usuario":
+                "Prenda":
                 {
-                    "type": "number",
-                    "description": "Código del usuario a quien pertenece la bolsa de compra."
+                    "type": "string",
+                    "description": "Descripcion de la prenda agregada a la bolsa de compra."
                 },
                 "clave_prenda":
                 {
                     "type": "string",
                     "description": "Clave de la prenda agregada a la bolsa de compra."
                 },
+                "Talla":
+                {
+                    "type": "string",
+                    "description": "Talla de la prenda agregada a la bolsa de compra."
+                },
                 "id_talla":
                 {
                     "type": "number",
-                    "description": "Código de la talla de la prenda a agregar a la bolsa de compra."
+                    "description": "Código de la talla de la prenda agregada a la bolsa de compra."
                 },
                 "unidades":
                 {

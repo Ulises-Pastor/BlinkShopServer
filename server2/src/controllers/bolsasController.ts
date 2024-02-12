@@ -8,7 +8,7 @@ class BolsasController
     }
     public async listarBolsa(req: Request, res: Response): Promise <void>{
         const {id} = req.params;
-        const respuesta = await pool.query('SELECT prendas.descripcion AS Prenda, tallas.talla_prenda AS Talla, unidades, bolsas_de_compra.precio_unitario, precio_total FROM bolsas_de_compra LEFT JOIN prendas ON prendas.clave = clave_prenda LEFT JOIN tallas ON tallas.id = id_talla WHERE id_usuario = ?', [id]);
+        const respuesta = await pool.query('SELECT prendas.descripcion AS Prenda, prendas.clave AS clave_prenda, tallas.talla_prenda AS Talla, tallas.id AS id_talla, unidades, bolsas_de_compra.precio_unitario, precio_total FROM bolsas_de_compra LEFT JOIN prendas ON prendas.clave = clave_prenda LEFT JOIN tallas ON tallas.id = id_talla WHERE id_usuario = ?', [id]);
         if(respuesta.length > 0){
             res.json(respuesta);
             return ;
