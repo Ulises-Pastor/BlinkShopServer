@@ -1084,12 +1084,14 @@
                                     "Clave": "blu-002",
                                     "Prenda": "Blusa cuello de tortuga de estambre para dama",
                                     "Talla": "Grande",
+                                    "id_talla": 4,
                                     "Unidades": 10
                                 },
                                 {
                                     "Clave": "pan-001",
                                     "Prenda": "Pantalón recto tipo mezclilla elástico para dama",
                                     "Talla": "Chica",
+                                    "id_talla": 5,
                                     "Unidades": 6
                                 }
                             ]
@@ -2194,6 +2196,10 @@
                 "descripcion": {
                     "type": "string",
                     "description": "Guarda la descripción de la prenda."
+                },
+                "Talla": {
+                    "type": "string",
+                    "description": "Guarda la talla de la prenda."
                 },
                 "id_talla": {
                     "type": "number",
