@@ -1,0 +1,2428 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Blink Shop Server",
+        "description": "<html><body>Esta es la documentación de la API para la tienda de Ropa Blink Shop. <br> <p><b>Manual Técnico</b></p> </body></html>",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "https://blinkserver.onrender.com",
+    "basePath": "",
+    "tags": [
+        {
+            "name": "Usuarios",
+            "description": "API para obtener información de los usuarios de la tienda"
+        },
+        {
+            "name": "Prendas",
+            "description": "API para obtener información de las prendas existentes en la tienda"
+        },
+        {
+            "name": "Bolsas de Compra",
+            "description": "API para obtener información de las bolsas de compra de cada usuario en la tienda"
+        },
+        {
+            "name": "Tipos",
+            "description": "API para obtener información de los tipos de prendas existentes en la tienda"
+        },
+        {
+            "name": "Tallas",
+            "description": "API para obtener información de las tallas permitidas en la tienda"
+        },
+        {
+            "name": "Roles",
+            "description": "API para obtener información de los roles existentes en la tienda"
+        },
+        {
+            "name": "Existencias",
+            "description": "API para obtener información de las existencias de ropa en la tienda"
+        },
+        {
+            "name": "Generos",
+            "description": "API para obtener información de los géneros de ropa permitidos en la tienda"
+        },
+        {
+            "name": "Ingresos",
+            "description": "API para obtener información de los ingresos por ventas realizadas en la tienda"
+        },
+        {
+            "name": "Ventas",
+            "description": "API para obtener información de las ventas realizadas en la tienda"
+        },
+        {
+            "name": "Descuentos",
+            "description": "API para obtener información de los descuentos existentes en la tienda"
+        }
+    ],
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/api/usuarios/mostrarUsuarios/": {
+            "get": {
+                "tags": ["Usuarios"],
+                "summary": "Listado de todos los usuarios que existen en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los usuarios que existen en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los usuarios existentes en la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 1,
+                                    "nombre": "Ulises Pastor",
+                                    "correo": "ulisesme14@gmail.com",
+                                    "contraseña": "Qwerty13579",
+                                    "rol": 2
+                                },
+                                {
+                                    "id": 2,
+                                    "nombre": "Juan Pérez",
+                                    "correo": "juan03@gmail.com",
+                                    "contraseña": "asdfgh2468",
+                                    "rol": 1
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/usuarios"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/verUsuario/{id}": {
+            "get": {
+                "tags": ["Usuarios"],
+                "summary": "Ver un usuario de la tienda.",
+                "description": "<p>Servicio que que permite ver la información de un usuario de la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cómo ver la información de un usuario de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 2,
+                                    "nombre": "Juan Pérez",
+                                    "correo": "juan03@gmail.com",
+                                    "contraseña": "asdfgh2468",
+                                    "rol": 1
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/usuario"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del usuario",
+                        "type": "number",
+                        "default": 1
+                    }
+                ]
+            }
+        },
+        "/api/usuarios/nuevoUsuario/": {
+            "post": {
+                "summary": "Agrega un usuario a la tienda.",
+                "description": "<p>Servicio que agrega un nuevo usuario a la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como agregar un nuevo usuario a la tienda?</strong></em></p>",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Usuario",
+                        "in": "body",
+                        "description": "Información del usuario a agregar.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoUsuario"
+                        }
+                    }
+                ],
+                "tags": ["Usuarios"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/actualizarUsuario/{id}": {
+            "put": {
+                "summary": "Modifica la informacion de un usuario de la tienda.",
+                "description": "<p>Servicio que actualiza la información de un usuario existente en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como modificar información de un usuario de la tienda?</strong></em></p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del usuario a modificar",
+                        "required": true,
+                        "default": 1
+                    },
+                    {
+                        "name": "Usuario",
+                        "in": "body",
+                        "description": "Nueva información del usuario.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoUsuario"
+                        }
+                    }
+                ],
+                "tags": ["Usuarios"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/eliminarUsuario/{id}": {
+            "delete": {
+                "tags": ["Usuarios"],
+                "summary": "Eliminar un usuario de la tienda.",
+                "description": "<p>Servicio que elimina un usuario de la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como eliminar un usuario de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del usuario a eliminar.",
+                        "type": "number",
+                        "default": 2
+                    }
+                ]
+            }
+        },
+        "/api/usuarios/iniciarSesion/": {
+            "post": {
+                "summary": "Inicia sesión en la tienda.",
+                "description": "<p>Servicio que permite el inicio de sesión de un usuario en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como iniciar sesión en la tienda?</strong></em></p>",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Usuario",
+                        "in": "body",
+                        "description": "Correo y contraseña del usuario que desea iniciar sesión.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/inicioSesion"
+                        }
+                    }
+                ],
+                "tags": ["Usuarios"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/bolsasDeCompra/verBolsa/{id}": {
+            "get": {
+                "tags": ["Bolsas de Compra"],
+                "summary": "Ver las prenda en la bolsa de compra.",
+                "description": "<p>Servicio que que permite ver la información de las prendas agregadas a la bolsa de compra del usuario dado.</p><p>&nbsp;</p><p><em><strong>¿Qué prendas tiene agregadas este usuario en su bolsa de compra?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "Prenda": "Blusa corte en V con hombros descubiertos",
+                                    "Talla": "Mediana",
+                                    "unidades": 3,
+                                    "precio_unitario": 135.25,
+                                    "precio_total": 405.75
+                                },
+                                {
+                                    "Prenda": "Pantalón recto tipo mezclilla elástico para dama",
+                                    "Talla": "Chica",
+                                    "unidades": 1,
+                                    "precio_unitario": 278.98,
+                                    "precio_total": 278.98
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/bolsa"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del usuario a quién pertenece la bolsa de compra a desplegar",
+                        "required": true,
+                        "type": "number",
+                        "default": "2"
+                    }
+                ]
+            }
+        },
+        "/api/bolsasDeCompra/agregarPrenda/": {
+            "post": {
+                "summary": "Agrega una prenda a la bolsa de compra.",
+                "description": "<p>Servicio que agrega un número de unidades de una prenda a la bolsa de compra del usuario dado.</p> <p>&nbsp;</p> <p><em><strong>¿Como crear un número de unidades de una prenda a la bolsa de compra?</strong></em></p>",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Usuario_Prenda",
+                        "in": "body",
+                        "description": "Id del usuario, clave de la prenda, talla y unidades a agregar a la bolsa de compra.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaBolsa_prenda"
+                        }
+                    }
+                ],
+                "tags": ["Bolsas de Compra"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/bolsas/actualizarPrenda/{clave}": {
+            "put": {
+                "summary": "Modifica la informacion de una prenda",
+                "description": "<p>Servicio que actualiza la información de una prenda existente en la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como actualizar la información de una prenda existente en la tienda?</strong></em></p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "clave",
+                        "in": "path",
+                        "description": "Clave de la prenda a modificar",
+                        "required": true,
+                        "type": "string",
+                        "default": "blu-001"
+                    },
+                    {
+                        "name": "Prenda",
+                        "in": "body",
+                        "description": "Nueva información de la prenda.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaPrenda"
+                        }
+                    }
+                ],
+                "tags": ["Bolsas de Compra"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/bolsas/eliminarPrenda/{clave}": {
+            "delete": {
+                "tags": ["Bolsas de Compra"],
+                "summary": "Eliminar una prenda de la tienda.",
+                "description": "<p>Servicio que elimina una prenda de la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como eliminar una prenda de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "clave",
+                        "in": "path",
+                        "description": "Clave de la prenda a eliminar.",
+                        "required": true,
+                        "type": "string",
+                        "default": "blu-001"
+                    }
+                ]
+            }
+        },
+        "/api/prendas/mostrarPrendas/": {
+            "get": {
+                "tags": ["Prendas"],
+                "summary": "Listado de todas los Prendas que existen en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de todas los prendas que existen en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son las prendas existentes en la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "clave": "blu-001",
+                                    "descripción": "Blusa con ribete de volantes y hombros descubiertos para dama",
+                                    "id_tipo": 1,
+                                    "id_género": 1,
+                                    "precio_unitario": 126.89
+                                },
+                                {
+                                    "clave": "blu-002",
+                                    "descripción": "Blusa con cuello de sobrepelliz y estampado floral para dama",
+                                    "id_tipo": 1,
+                                    "id_género": 1,
+                                    "precio_unitario": 169.37
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/prendas"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/prendas/verPrenda/{clave}": {
+            "get": {
+                "tags": ["Prendas"],
+                "summary": "Ver una prenda de la tienda.",
+                "description": "<p>Servicio que que permite ver la información de una prenda de la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cómo ver la información de una prenda de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "clave": "blu-002",
+                                    "descripción": "Blusa con cuello de sobrepelliz y estampado floral para dama",
+                                    "id_tipo": 1,
+                                    "id_género": 1,
+                                    "precio_unitario": 169.37
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/prenda"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "clave",
+                        "in": "path",
+                        "description": "Clave de la prenda",
+                        "required": true,
+                        "type": "string",
+                        "default": "blu-001"
+                    }
+                ]
+            }
+        },
+        "/api/prendas/nuevaPrenda/": {
+            "post": {
+                "summary": "Agrega una prenda a la tienda.",
+                "description": "<p>Servicio que crea una prenda en la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como crear una prenda en la tienda?</strong></em></p>",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Prenda",
+                        "in": "body",
+                        "description": "Información de la prenda a agregar.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaPrenda"
+                        }
+                    }
+                ],
+                "tags": ["Prendas"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/prendas/actualizarPrenda/{clave}": {
+            "put": {
+                "summary": "Modifica la informacion de una prenda",
+                "description": "<p>Servicio que actualiza la información de una prenda existente en la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como actualizar la información de una prenda existente en la tienda?</strong></em></p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "clave",
+                        "in": "path",
+                        "description": "Clave de la prenda a modificar",
+                        "required": true,
+                        "type": "string",
+                        "default": "blu-001"
+                    },
+                    {
+                        "name": "Prenda",
+                        "in": "body",
+                        "description": "Nueva información de la prenda.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaPrenda"
+                        }
+                    }
+                ],
+                "tags": ["Prendas"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/prendas/eliminarPrenda/{clave}": {
+            "delete": {
+                "tags": ["Prendas"],
+                "summary": "Eliminar una prenda de la tienda.",
+                "description": "<p>Servicio que elimina una prenda de la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como eliminar una prenda de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "clave",
+                        "in": "path",
+                        "description": "Clave de la prenda a eliminar.",
+                        "required": true,
+                        "type": "string",
+                        "default": "blu-001"
+                    }
+                ]
+            }
+        },
+        "/api/tipos/mostrarTipos/": {
+            "get": {
+                "tags": ["Tipos"],
+                "summary": "Listado de todos los tipos de prendas que existen en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los tipos de prenda que existen en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los tipos de prenda existentes en la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 1,
+                                    "tipo_prenda": "Blusa"
+                                },
+                                {
+                                    "id": 2,
+                                    "tipo_prenda": "Pantalón"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/tipos"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/tipos/verTipo/{id}": {
+            "get": {
+                "tags": ["Tipos"],
+                "summary": "Ver un tipo de prenda de la tienda.",
+                "description": "<p>Servicio que que permite ver la información de un tipo de prenda de la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cómo ver la información de un tipo de prenda de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 1,
+                                    "nombre": "Blusa"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/tipo"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del tipo de prenda",
+                        "type": "number",
+                        "default": 1
+                    }
+                ]
+            }
+        },
+        "/api/tipos/nuevoTipo/": {
+            "post": {
+                "summary": "Agrega un tipo de prenda a la tienda.",
+                "description": "<p>Servicio que agrega un nuevo tipo de prenda a la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como agregar un nuevo tipo de prenda a la tienda?</strong></em></p>",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Tipo",
+                        "in": "body",
+                        "description": "Información del tipo de prenda a agregar.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoTipo"
+                        }
+                    }
+                ],
+                "tags": ["Tipos"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/tipos/actualizarTipo/{id}": {
+            "put": {
+                "summary": "Modifica la informacion de un tipo de prenda de la tienda.",
+                "description": "<p>Servicio que actualiza la información de un tipo de prenda existente en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como modificar información de un tipo de prenda de la tienda?</strong></em></p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del tipo de prenda a modificar",
+                        "required": true,
+                        "default": 1
+                    },
+                    {
+                        "name": "Tipo",
+                        "in": "body",
+                        "description": "Nueva información del tipo de prenda.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoTipo"
+                        }
+                    }
+                ],
+                "tags": ["Tipos"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/tipos/eliminarTipo/{id}": {
+            "delete": {
+                "tags": ["Tipos"],
+                "summary": "Eliminar un tipo de prenda de la tienda.",
+                "description": "<p>Servicio que elimina un tipo de prenda de la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como eliminar un tipo de prenda de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del tipo de prenda a eliminar.",
+                        "type": "number",
+                        "default": 2
+                    }
+                ]
+            }
+        },
+        "/api/tallas/mostrarTallas/": {
+            "get": {
+                "tags": ["Tallas"],
+                "summary": "Listado de todas las tallas permitidas en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de todas las tallas que son permitadas en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son las tallas permitidas en la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 1,
+                                    "talla_prenda": "Grande",
+                                    "abreviatura": "G"
+                                },
+                                {
+                                    "id": 2,
+                                    "talla_prenda": "Mediana",
+                                    "abreviatura": "M"
+                                },
+                                {
+                                    "id": 3,
+                                    "talla_prenda": "Chica",
+                                    "abreviatura": "C"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/tallas"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/tallas/verTalla/{id}": {
+            "get": {
+                "tags": ["Tallas"],
+                "summary": "Ver una talla de la tienda.",
+                "description": "<p>Servicio que que permite ver la información de una talla de la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cómo ver la información de una talla de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 2,
+                                    "talla_prenda": "Mediana",
+                                    "abreviatura": "M"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/talla"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id de la talla",
+                        "type": "number",
+                        "default": 1
+                    }
+                ]
+            }
+        },
+        "/api/tallas/nuevaTalla/": {
+            "post": {
+                "summary": "Agrega una talla a la tienda.",
+                "description": "<p>Servicio que agrega una nueva talla a la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como agregar una nueva talla a la tienda?</strong></em></p>",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Talla",
+                        "in": "body",
+                        "description": "Información de la talla a agregar.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaTalla"
+                        }
+                    }
+                ],
+                "tags": ["Tallas"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/tallas/actualizarTalla/{id}": {
+            "put": {
+                "summary": "Modifica la informacion de una talla de la tienda.",
+                "description": "<p>Servicio que actualiza la información de una talla permitida en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como modificar información de una talla de la tienda?</strong></em></p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id de la talla a modificar",
+                        "required": true,
+                        "default": 1
+                    },
+                    {
+                        "name": "Talla",
+                        "in": "body",
+                        "description": "Nueva información de la talla.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaTalla"
+                        }
+                    }
+                ],
+                "tags": ["Tallas"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/tallas/eliminarTalla/{id}": {
+            "delete": {
+                "tags": ["Tallas"],
+                "summary": "Eliminar una talla de la tienda.",
+                "description": "<p>Servicio que elimina una talla de la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como eliminar una talla de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id de la talla a eliminar.",
+                        "type": "number",
+                        "default": 2
+                    }
+                ]
+            }
+        },
+        "/api/roles/mostrarRoles/": {
+            "get": {
+                "tags": ["Roles"],
+                "summary": "Listado de todos las roles de la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de todos las roles que son permitados en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los roles permitidos en la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 1,
+                                    "rol": "Cliente"
+                                },
+                                {
+                                    "id": 2,
+                                    "rol": "Administrador"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/roles"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/roles/verRol/{id}": {
+            "get": {
+                "tags": ["Roles"],
+                "summary": "Ver un rol de la tienda.",
+                "description": "<p>Servicio que que permite ver la información de un rol de la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cómo ver la información de un rol de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 1,
+                                    "rol": "Cliente"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/rol"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del rol",
+                        "type": "number",
+                        "default": 1
+                    }
+                ]
+            }
+        },
+        "/api/roles/nuevoRol/": {
+            "post": {
+                "summary": "Agrega un rol a la tienda.",
+                "description": "<p>Servicio que agrega un nuevo rol a la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como agregar un nuevo rol a la tienda?</strong></em></p>",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Rol",
+                        "in": "body",
+                        "description": "Información del rol a agregar.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoRol"
+                        }
+                    }
+                ],
+                "tags": ["Roles"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/roles/actualizarRol/{id}": {
+            "put": {
+                "summary": "Modifica la informacion de un rol de la tienda.",
+                "description": "<p>Servicio que actualiza la información de un rol en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como modificar información de un rol de la tienda?</strong></em></p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del rol a modificar",
+                        "required": true,
+                        "default": 1
+                    },
+                    {
+                        "name": "Rol",
+                        "in": "body",
+                        "description": "Nueva información del rol.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoRol"
+                        }
+                    }
+                ],
+                "tags": ["Roles"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/roles/eliminarRol/{id}": {
+            "delete": {
+                "tags": ["Roles"],
+                "summary": "Eliminar un rol de la tienda.",
+                "description": "<p>Servicio que elimina un rol de la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como eliminar un rol de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del rol a eliminar.",
+                        "type": "number",
+                        "default": 2
+                    }
+                ]
+            }
+        },
+        "/api/existencias/mostrarExistencias/": {
+            "get": {
+                "tags": ["Existencias"],
+                "summary": "Listado de todas las existencias de prendas en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de todas las existencias de prendas y tallas en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son las existencias de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "Clave": "blu-002",
+                                    "Prenda": "Blusa cuello de tortuga de estambre para dama",
+                                    "Talla": "Grande",
+                                    "Unidades": 10
+                                },
+                                {
+                                    "Clave": "pan-001",
+                                    "Prenda": "Pantalón recto tipo mezclilla elástico para dama",
+                                    "Talla": "Chica",
+                                    "Unidades": 6
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/existencias"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/existencias/mostrarExistenciasPorPrenda/{clave_prenda}": {
+            "get": {
+                "tags": ["Existencias"],
+                "summary": "Listado de todas las existencias de una determinada prenda en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de todas las existencias de una prenda en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son las existencias de esta prenda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "Clave": "blu-001",
+                                    "Prenda": "Blusa corte en V con hombros descubiertos",
+                                    "Talla": "Mediana",
+                                    "Unidades": 5
+                                },
+                                {
+                                    "Clave": "blu-001",
+                                    "Prenda": "Blusa corte en V con hombros descubiertos",
+                                    "Talla": "Grande",
+                                    "Unidades": 2
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/existencias"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "clave_prenda",
+                        "in": "path",
+                        "required": true,
+                        "description": "Clave de la prenda",
+                        "type": "string",
+                        "default": "blu-001"
+                    }
+                ]
+            }
+        },
+        "/api/existencias/verExistencia/{clave_prenda}/{id_talla}": {
+            "get": {
+                "tags": ["Existencias"],
+                "summary": "Ver una existencia en la tienda.",
+                "description": "<p>Servicio que permite ver la información de una existencia, dada una prenda y una talla, en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Hay existencias de esta prenda con esta talla en la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "Clave": "blu-002",
+                                    "Prenda": "Blusa cuello de tortuga de estambre para dama",
+                                    "Talla": "Grande",
+                                    "Unidades": 10
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/existencia"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "clave_prenda",
+                        "in": "path",
+                        "required": true,
+                        "description": "Clave de la prenda",
+                        "type": "string",
+                        "default": "blu-001"
+                    },
+                    {
+                        "name": "id_talla",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id de la talla",
+                        "type": "number",
+                        "default": 1
+                    }
+                ]
+            }
+        },
+        "/api/existencias/nuevaExistencia/": {
+            "post": {
+                "summary": "Agrega una existencia a la tienda.",
+                "description": "<p>Servicio que agrega una nueva existencia de una prenda a la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como agregar existencias de prendas a la tienda?</strong></em></p>",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Existencia",
+                        "in": "body",
+                        "description": "Información de la existencia a agregar.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaExistencia"
+                        }
+                    }
+                ],
+                "tags": ["Existencias"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/existencias/actualizarExistencia/{clave_prenda}/{id_talla}": {
+            "put": {
+                "summary": "Modifica la informacion de una existencia de la tienda.",
+                "description": "<p>Servicio que actualiza la información de una de una prenda y una talla en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como modificar información de una talla de la tienda?</strong></em></p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "clave_prenda",
+                        "in": "path",
+                        "required": true,
+                        "description": "Clave de la prenda",
+                        "type": "string",
+                        "default": "blu-001"
+                    },
+                    {
+                        "name": "id_talla",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id de la talla",
+                        "type": "number",
+                        "default": 1
+                    },
+                    {
+                        "name": "Existencia",
+                        "in": "body",
+                        "description": "Nueva información de la existencia.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaExistencia"
+                        }
+                    }
+                ],
+                "tags": ["Existencias"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/existencias/eliminarExistencia/{clave_prenda}/{id_talla}": {
+            "delete": {
+                "tags": ["Existencias"],
+                "summary": "Eliminar una existencia de la tienda.",
+                "description": "<p>Servicio que elimina una existencia de la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como eliminar una existencia de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "clave_prenda",
+                        "in": "path",
+                        "required": true,
+                        "description": "Clave de la prenda",
+                        "type": "string",
+                        "default": "blu-001"
+                    },
+                    {
+                        "name": "id_talla",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id de la talla",
+                        "type": "number",
+                        "default": 1
+                    }
+                ]
+            }
+        },
+        "/api/generos/mostrarGeneros/": {
+            "get": {
+                "tags": ["Generos"],
+                "summary": "Listado de todos los generos de prenda permitidos en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los géneros de prenda permitidos en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los géneros permitidos en la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 1,
+                                    "genero": "Dama"
+                                },
+                                {
+                                    "id": 2,
+                                    "genero": "Caballero"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/generos"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/generos/verGenero/{id}": {
+            "get": {
+                "tags": ["Generos"],
+                "summary": "Ver un género de prenda de la tienda.",
+                "description": "<p>Servicio que que permite ver la información de un género de prenda de la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cómo ver la información de un género de prenda de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 2,
+                                    "genero": "Caballero"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/genero"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del género de prenda",
+                        "type": "number",
+                        "default": 1
+                    }
+                ]
+            }
+        },
+        "/api/generos/nuevoGenero/": {
+            "post": {
+                "summary": "Agrega un género de prenda a la tienda.",
+                "description": "<p>Servicio que agrega un nuevo género de prenda a la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como agregar un nuevo género de prenda a la tienda?</strong></em></p>",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Genero",
+                        "in": "body",
+                        "description": "Información del género de prenda a agregar.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoGenero"
+                        }
+                    }
+                ],
+                "tags": ["Generos"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/generos/actualizarGenero/{id}": {
+            "put": {
+                "summary": "Modifica la información de un género de prenda de la tienda.",
+                "description": "<p>Servicio que actualiza la información de un género de prenda existente en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como modificar información de un género de prenda de la tienda?</strong></em></p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del género de prenda a modificar",
+                        "required": true,
+                        "default": 1
+                    },
+                    {
+                        "name": "genero",
+                        "in": "body",
+                        "description": "Nueva información del género de prenda.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoGenero"
+                        }
+                    }
+                ],
+                "tags": ["Generos"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/generos/eliminarGenero/{id}": {
+            "delete": {
+                "tags": ["Generos"],
+                "summary": "Eliminar un género de prenda de la tienda.",
+                "description": "<p>Servicio que elimina un género de prenda de la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como eliminar un género de prenda de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del género de prenda a eliminar.",
+                        "type": "number",
+                        "default": 2
+                    }
+                ]
+            }
+        },
+        "/api/descuentos/mostrarDescuentos/": {
+            "get": {
+                "tags": ["Descuentos"],
+                "summary": "Listado de todos los descuentos permitidos en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los descuentos que son aplicables en la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los descuentos permitidos en la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 1,
+                                    "descripcion": "Descuento del 10%",
+                                    "porcentaje": 10
+                                },
+                                {
+                                    "id": 2,
+                                    "descripcion": "Descuento del 15%",
+                                    "porcentaje": 15
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/descuentos"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/descuentos/verDescuento/{id}": {
+            "get": {
+                "tags": ["Descuentos"],
+                "summary": "Ver un descuento de la tienda.",
+                "description": "<p>Servicio que que permite ver la información de un descuento de la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cómo ver la información de un descuento de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 2,
+                                    "descripcion": "Descuento del 15%",
+                                    "porcentaje": 15
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/descuento"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del descuento",
+                        "type": "number",
+                        "default": 1
+                    }
+                ]
+            }
+        },
+        "/api/descuentos/nuevoDescuento/": {
+            "post": {
+                "summary": "Agrega un descuento a la tienda.",
+                "description": "<p>Servicio que agrega un nuevo descuento aplicable a la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como agregar un nuevo descuento aplicable a la tienda?</strong></em></p>",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Decuento",
+                        "in": "body",
+                        "description": "Información del descuento a agregar.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoDescuento"
+                        }
+                    }
+                ],
+                "tags": ["Descuentos"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/descuentos/actualizarDescuento/{id}": {
+            "put": {
+                "summary": "Modifica la informacion de un descuento de la tienda.",
+                "description": "<p>Servicio que actualiza la información de un descuento aplicable a la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como modificar información de un descuento aplicable a la tienda?</strong></em></p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del descuento a modificar",
+                        "required": true,
+                        "default": 1
+                    },
+                    {
+                        "name": "Descuento",
+                        "in": "body",
+                        "description": "Nueva información del descuento.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoDescuento"
+                        }
+                    }
+                ],
+                "tags": ["Descuentos"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/descuentos/eliminarDescuento/{id}": {
+            "delete": {
+                "tags": ["Descuentos"],
+                "summary": "Eliminar un descuento de la tienda.",
+                "description": "<p>Servicio que elimina un descuento de la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como eliminar un descuento de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del descuento a eliminar.",
+                        "type": "number",
+                        "default": 2
+                    }
+                ]
+            }
+        },
+        "/api/ingresos/mostrarIngresos/": {
+            "get": {
+                "tags": ["Ingresos"],
+                "summary": "Listado de todos los ingresos que ha tenido la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los ingresos que ha tenido la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los ingresos obtenidos por la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 1,
+                                    "clave_prenda": "pan-001",
+                                    "unidades": 2,
+                                    "precio_unitario": 278.98,
+                                    "precio_total": 557.96
+                                },
+                                {
+                                    "id": 2,
+                                    "clave_prenda": "blu-001",
+                                    "unidades": 1,
+                                    "precio_unitario": 135.25,
+                                    "precio_total": 135.25
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ingresos"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/ingresos/verIngreso/{id}": {
+            "get": {
+                "tags": ["Ingresos"],
+                "summary": "Ver un ingreso de la tienda.",
+                "description": "<p>Servicio que permite ver la información de un ingreso obtenido por la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cómo ver la información de un ingreso obtenido por la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 2,
+                                    "clave_prenda": "blu-002",
+                                    "unidades": 1,
+                                    "precio_unitario": 140.5
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ingreso"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del ingreso",
+                        "type": "number",
+                        "default": 1
+                    }
+                ]
+            }
+        },
+        "/api/ingresos/nuevoIngreso/": {
+            "post": {
+                "summary": "Agrega un ingreso de tienda.",
+                "description": "<p>Servicio que agrega un nuevo ingreso obtenido por la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como agregar un nuevo ingreso obtenido por la tienda?</strong></em></p>",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Ingreso",
+                        "in": "body",
+                        "description": "Información del ingreso a agregar.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoIngreso"
+                        }
+                    }
+                ],
+                "tags": ["Ingresos"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/ingresos/actualizarIngreso/{id}": {
+            "put": {
+                "summary": "Modifica la informacion de un ingreso de la tienda.",
+                "description": "<p>Servicio que actualiza la información de un ingreso obtenido por la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como modificar información de un ingreso obtenido por la tienda?</strong></em></p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del ingreso a modificar",
+                        "required": true,
+                        "default": 1
+                    },
+                    {
+                        "name": "Ingreso",
+                        "in": "body",
+                        "description": "Nueva información del ingreso.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoIngreso"
+                        }
+                    }
+                ],
+                "tags": ["Ingresos"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/ingresos/eliminarIngreso/{id}": {
+            "delete": {
+                "tags": ["Ingresos"],
+                "summary": "Eliminar un ingreso de la tienda.",
+                "description": "<p>Servicio que elimina un ingreso de la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como eliminar un ingreso de la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del ingreso a eliminar.",
+                        "type": "number",
+                        "default": 1
+                    }
+                ]
+            }
+        },
+        "/api/ventas/mostrarVentas/": {
+            "get": {
+                "tags": ["Ventas"],
+                "summary": "Listado de todos las ventas que ha tenido la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de todos las ventas que ha tenido la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los ventas obtenidas por la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 1,
+                                    "id_usuario": 2,
+                                    "fecha": "2023-12-10T06:00:00.000Z"
+                                },
+                                {
+                                    "id": 2,
+                                    "id_usuario": 3,
+                                    "fecha": "2023-12-10T06:00:00.000Z"
+                                },
+                                {
+                                    "id": 3,
+                                    "id_usuario": 3,
+                                    "fecha": "2023-12-10T06:00:00.000Z"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ventas"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/ventas/verVenta/{id}": {
+            "get": {
+                "tags": ["Ventas"],
+                "summary": "Ver un venta de la tienda.",
+                "description": "<p>Servicio que permite ver la información de una venta realizada por la tienda.</p><p>&nbsp;</p><p><em><strong>¿Cómo ver la información de un venta realizada por la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": 3,
+                                    "id_usuario": 3,
+                                    "fecha": "2023-12-10T06:00:00.000Z"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/venta"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id de la venta",
+                        "type": "number",
+                        "default": 1
+                    }
+                ]
+            }
+        },
+        "/api/ventas/nuevaVenta/": {
+            "post": {
+                "summary": "Agrega una venta de la tienda.",
+                "description": "<p>Servicio que agrega una nueva venta realizada por la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como agregar una nueva venta realizada por la tienda?</strong></em></p>",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Venta",
+                        "in": "body",
+                        "description": "Información de la venta a agregar.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaVenta"
+                        }
+                    }
+                ],
+                "tags": ["Ventas"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/ventas/actualizarVenta/{id}": {
+            "put": {
+                "summary": "Modifica la informacion de una venta de la tienda.",
+                "description": "<p>Servicio que actualiza la información de una venta realizada por la tienda.</p><p>&nbsp;</p><p><em><strong>¿Como modificar información de un venta obtenido por la tienda?</strong></em></p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id de la venta a modificar",
+                        "required": true,
+                        "default": 1
+                    },
+                    {
+                        "name": "venta",
+                        "in": "body",
+                        "description": "Nueva información de la venta.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaVenta"
+                        }
+                    }
+                ],
+                "tags": ["Ventas"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/ventas/eliminarVenta/{id}": {
+            "delete": {
+                "tags": ["Ventas"],
+                "summary": "Eliminar una venta de la tienda.",
+                "description": "<p>Servicio que elimina una venta realizada por la tienda.</p> <p>&nbsp;</p> <p><em><strong>¿Como eliminar una venta realizada por la tienda?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id de la venta a eliminar.",
+                        "type": "number",
+                        "default": 1
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "usuario": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "Codigo unico que permite identificar al usuario."
+                },
+                "nombre": {
+                    "type": "string",
+                    "description": "Guarda el nombre del usuario."
+                },
+                "correo": {
+                    "type": "string",
+                    "description": "Guarda el correo del usuario."
+                },
+                "contrasena": {
+                    "type": "string",
+                    "description": "Guarda la contraseña del usuario."
+                },
+                "rol": {
+                    "type": "number",
+                    "description": "Guarda el id del rol del usuario."
+                }
+            }
+        },
+        "usuarios": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/usuario"
+            }
+        },
+        "NuevoUsuario": {
+            "type": "object",
+            "properties": {
+                "nombre": {
+                    "type": "string",
+                    "description": "Guarda el nombre del usuario."
+                },
+                "correo": {
+                    "type": "string",
+                    "description": "Guarda el correo del usuario."
+                },
+                "contrasena": {
+                    "type": "string",
+                    "description": "Guarda la contraseña del usuario."
+                },
+                "rol": {
+                    "type": "number",
+                    "description": "Guarda el id del rol del usuario."
+                }
+            }
+        },
+        "inicioSesion": {
+            "type": "object",
+            "properties": {
+                "correo": {
+                    "type": "string",
+                    "description": "Recibe el correo del usuario."
+                },
+                "contrasena": {
+                    "type": "string",
+                    "description": "Recibe la contraseña del usuario."
+                }
+            }
+        },
+        "prenda": {
+            "type": "object",
+            "properties": {
+                "clave": {
+                    "type": "varchar",
+                    "description": "Clave que permite identificar la prenda."
+                },
+                "descripcion": {
+                    "type": "string",
+                    "description": "Guarda una descripción de la prenda."
+                },
+                "id_tipo": {
+                    "type": "number",
+                    "description": "Guarda el id del tipo de la prenda."
+                },
+                "id_genero": {
+                    "type": "number",
+                    "description": "Guarda el id del género de la prenda."
+                },
+                "precio_unitario": {
+                    "type": "number",
+                    "description": "Guarda el precio por unidad de la prenda."
+                }
+            }
+        },
+        "prendas": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/prenda"
+            }
+        },
+        "NuevaPrenda": {
+            "type": "object",
+            "properties": {
+                "clave": {
+                    "type": "string",
+                    "description": "Clave que permite identificar la prenda."
+                },
+                "descripcion": {
+                    "type": "string",
+                    "description": "Guarda una descripción de la prenda."
+                },
+                "id_tipo": {
+                    "type": "number",
+                    "description": "Guarda el id del tipo de la prenda."
+                },
+                "id_genero": {
+                    "type": "number",
+                    "description": "Guarda el id del género de la prenda."
+                },
+                "precio_unitario": {
+                    "type": "number",
+                    "description": "Guarda el precio por unidad de la prenda."
+                }
+            }
+        },
+        "tipo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "Código unico que permite identificar al tipo de prenda."
+                },
+                "tipo_prenda": {
+                    "type": "string",
+                    "description": "Guarda el nombre del tipo de prenda."
+                }
+            }
+        },
+        "tipos": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/tipo"
+            }
+        },
+        "NuevoTipo": {
+            "type": "object",
+            "properties": {
+                "tipo_prenda": {
+                    "type": "string",
+                    "description": "Guarda el nombre del tipo de prenda."
+                }
+            }
+        },
+        "talla": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "Código unico que permite identificar la talla."
+                },
+                "talla_prenda": {
+                    "type": "string",
+                    "description": "Guarda el nombre de la talla."
+                },
+                "abreviatura": {
+                    "type": "string",
+                    "description": "Guarda la abreviatura de la talla."
+                }
+            }
+        },
+        "tallas": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/talla"
+            }
+        },
+        "NuevaTalla": {
+            "type": "object",
+            "properties": {
+                "talla_prenda": {
+                    "type": "string",
+                    "description": "Guarda el nombre del talla de prenda."
+                },
+                "abreviatura": {
+                    "type": "string",
+                    "description": "Guarda la abreviatura de la talla."
+                }
+            }
+        },
+        "rol": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "Codigo único que permite identificar al rol."
+                },
+                "rol": {
+                    "type": "string",
+                    "description": "Guarda el nombre del rol."
+                }
+            }
+        },
+        "roles": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/rol"
+            }
+        },
+        "NuevoRol": {
+            "type": "object",
+            "properties": {
+                "rol": {
+                    "type": "string",
+                    "description": "Guarda el nombre del rol."
+                }
+            }
+        },
+        "existencia": {
+            "type": "object",
+            "properties": {
+                "clave_prenda": {
+                    "type": "string",
+                    "description": "Clave para identificar la prenda."
+                },
+                "descripcion": {
+                    "type": "string",
+                    "description": "Guarda la descripción de la prenda."
+                },
+                "id_talla": {
+                    "type": "number",
+                    "description": "Código para identificar la talla."
+                },
+                "unidades": {
+                    "type": "number",
+                    "description": "Guarda el número de unidades de la prenda con la talla dadas."
+                }
+            }
+        },
+        "existencias": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/existencia"
+            }
+        },
+        "NuevaExistencia": {
+            "type": "object",
+            "properties": {
+                "clave_prenda": {
+                    "type": "string",
+                    "description": "Clave para identificar la prenda."
+                },
+                "id_talla": {
+                    "type": "number",
+                    "description": "Código para identificar la talla."
+                },
+                "unidades": {
+                    "type": "number",
+                    "description": "Guarda el número de unidades de la prenda con la talla dadas."
+                }
+            }
+        },
+        "genero": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "Código unico que permite identificar al género de prenda."
+                },
+                "genero_prenda": {
+                    "type": "string",
+                    "description": "Guarda el nombre del género de prenda."
+                }
+            }
+        },
+        "generos": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/genero"
+            }
+        },
+        "NuevoGenero": {
+            "type": "object",
+            "properties": {
+                "genero": {
+                    "type": "string",
+                    "description": "Guarda el nombre del género de prenda."
+                }
+            }
+        },
+        "descuento": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "Código único que permite identificar el descuento."
+                },
+                "descripcion": {
+                    "type": "string",
+                    "description": "Guarda la descripción del descuento."
+                },
+                "porcentaje": {
+                    "type": "number",
+                    "description": "Guarda el porcentaje del descuento."
+                }
+            }
+        },
+        "descuentos": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/descuento"
+            }
+        },
+        "NuevoDescuento": {
+            "type": "object",
+            "properties": {
+                "descripcion": {
+                    "type": "string",
+                    "description": "Guarda la descripción del descuento."
+                },
+                "porcentaje": {
+                    "type": "number",
+                    "description": "Guarda el porcentaje del descuento."
+                }
+            }
+        },
+        "ingreso": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "Código único que permite identificar el ingreso."
+                },
+                "clave_prenda": {
+                    "type": "string",
+                    "description": "Guarda la clave de la prenda vendida."
+                },
+                "unidades": {
+                    "type": "number",
+                    "description": "Guarda el número de unidades vendidas."
+                },
+                "precio_unitario": {
+                    "type": "number",
+                    "description": "Guarda el precio unitario, obtenido de la prenda, al momento de efectuada la venta."
+                },
+                "precio_total": {
+                    "type": "number",
+                    "description": "Guarda el precio total calculado de la prenda al momento de efectuada la venta."
+                }
+            }
+        },
+        "ingresos": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ingreso"
+            }
+        },
+        "NuevoIngreso": {
+            "type": "object",
+            "properties": {
+                "clave_prenda": {
+                    "type": "string",
+                    "description": "Guarda la clave de la prenda vendida."
+                },
+                "unidades": {
+                    "type": "number",
+                    "description": "Guarda el número de unidades vendidas."
+                }
+            }
+        },
+        "venta": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "Código único que permite identificar la venta."
+                },
+                "id_usuario": {
+                    "type": "number",
+                    "description": "Código del usuario que efectuó la compra."
+                },
+                "fecha": {
+                    "type": "string",
+                    "description": "Guarda la fecha en la que se efectuó la venta."
+                }
+            }
+        },
+        "ventas": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/venta"
+            }
+        },
+        "NuevaVenta": {
+            "type": "object",
+            "properties": {
+                "id_usuario": {
+                    "type": "number",
+                    "description": "Código del usuario que efectuó la compra."
+                }
+            }
+        },
+        "bolsa_prenda": {
+            "type": "object",
+            "properties": {
+                "id_usuario": {
+                    "type": "number",
+                    "description": "Código del usuario a quien pertenece la bolsa de compra."
+                },
+                "clave_prenda": {
+                    "type": "string",
+                    "description": "Clave de la prenda agregada a la bolsa de compra."
+                },
+                "id_talla": {
+                    "type": "number",
+                    "description": "Código de la talla de la prenda a agregar a la bolsa de compra."
+                },
+                "unidades": {
+                    "type": "number",
+                    "description": "Número de unidades de una prenda agregada."
+                },
+                "precio_unitario": {
+                    "type": "number",
+                    "description": "Guarda el precio unitario, obtenido de la prenda, al momento haber sido añadida a la bolsa de compra."
+                },
+                "precio_total": {
+                    "type": "number",
+                    "description": "Guarda el precio total calculado de la prenda al momento haber sido añadida a la bolsa de compra."
+                }
+            }
+        },
+        "bolsa": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/bolsa_prenda"
+            }
+        },
+        "NuevaBolsa_prenda": {
+            "type": "object",
+            "properties": {
+                "id_usuario": {
+                    "type": "number",
+                    "description": "Código del usuario a quien pertenece la bolsa de compra."
+                },
+                "clave_prenda": {
+                    "type": "string",
+                    "description": "Clave de la prenda a agregar a la bolsa de compra."
+                },
+                "id_talla": {
+                    "type": "number",
+                    "description": "Código de la talla de la prenda a agregar a la bolsa de compra."
+                },
+                "unidades": {
+                    "type": "number",
+                    "description": "Número de unidades de la prenda a agregar a la  bolsa de compra."
+                }
+            }
+        }
+    }
+}
