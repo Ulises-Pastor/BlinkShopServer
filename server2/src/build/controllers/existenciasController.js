@@ -17,14 +17,14 @@ const database_1 = __importDefault(require("../database"));
 class ExistenciasController {
     listar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const respuesta = yield database_1.default.query('SELECT prendas.clave AS Clave, prendas.descripcion AS Prenda, tallas.talla_prenda AS Talla, unidades AS Unidades FROM existencias LEFT JOIN prendas ON prendas.clave = existencias.clave_prenda LEFT JOIN tallas ON tallas.id = existencias.id_talla');
+            const respuesta = yield database_1.default.query('SELECT prendas.clave AS Clave, prendas.descripcion AS Prenda, tallas.id AS Talla, unidades AS Unidades FROM existencias LEFT JOIN prendas ON prendas.clave = existencias.clave_prenda LEFT JOIN tallas ON tallas.id = existencias.id_talla');
             res.json(respuesta);
         });
     }
     listarPorPrenda(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { clave_prenda } = req.params;
-            const respuesta = yield database_1.default.query('SELECT prendas.clave AS Clave, prendas.descripcion AS Prenda, tallas.talla_prenda AS Talla, unidades AS Unidades FROM existencias LEFT JOIN prendas ON prendas.clave = existencias.clave_prenda LEFT JOIN tallas ON tallas.id = existencias.id_talla WHERE clave_prenda = ?', [clave_prenda]);
+            const respuesta = yield database_1.default.query('SELECT prendas.clave AS Clave, prendas.descripcion AS Prenda, tallas.id AS Talla, unidades AS Unidades FROM existencias LEFT JOIN prendas ON prendas.clave = existencias.clave_prenda LEFT JOIN tallas ON tallas.id = existencias.id_talla WHERE clave_prenda = ?', [clave_prenda]);
             if (respuesta.length > 0) {
                 res.json(respuesta);
                 return;
@@ -35,7 +35,7 @@ class ExistenciasController {
     listarUno(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { clave_prenda, id_talla } = req.params;
-            const respuesta = yield database_1.default.query('SELECT prendas.clave AS Clave, prendas.descripcion AS Prenda, tallas.talla_prenda AS Talla, unidades AS Unidades FROM existencias LEFT JOIN prendas ON prendas.clave = existencias.clave_prenda LEFT JOIN tallas ON tallas.id = existencias.id_talla WHERE clave_prenda = ? and id_talla = ?', [clave_prenda, id_talla]);
+            const respuesta = yield database_1.default.query('SELECT prendas.clave AS Clave, prendas.descripcion AS Prenda, tallas.id AS Talla, unidades AS Unidades FROM existencias LEFT JOIN prendas ON prendas.clave = existencias.clave_prenda LEFT JOIN tallas ON tallas.id = existencias.id_talla WHERE clave_prenda = ? and id_talla = ?', [clave_prenda, id_talla]);
             if (respuesta.length > 0) {
                 res.json(respuesta);
                 return;
