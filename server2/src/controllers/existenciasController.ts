@@ -5,14 +5,14 @@ class ExistenciasController
 {
     public async listar(req: Request, res: Response ): Promise<void>
     {
-        const respuesta = await pool.query('SELECT prendas.clave AS Clave, prendas.descripcion AS Prenda, tallas.talla_prenda AS Talla, tallas.id, unidades AS Unidades FROM existencias LEFT JOIN prendas ON prendas.clave = existencias.clave_prenda LEFT JOIN tallas ON tallas.id = existencias.id_talla');
+        const respuesta = await pool.query('SELECT prendas.clave AS Clave, prendas.descripcion AS Prenda, tallas.talla_prenda AS Talla, tallas.id AS id_talla, unidades AS Unidades FROM existencias LEFT JOIN prendas ON prendas.clave = existencias.clave_prenda LEFT JOIN tallas ON tallas.id = existencias.id_talla');
         res.json( respuesta );
     }
 
     public async listarPorPrenda(req: Request, res: Response ): Promise<void>
     {
         const {clave_prenda} = req.params;
-        const respuesta = await pool.query('SELECT prendas.clave AS Clave, prendas.descripcion AS Prenda, tallas.talla_prenda AS Talla, tallas.id, unidades AS Unidades FROM existencias LEFT JOIN prendas ON prendas.clave = existencias.clave_prenda LEFT JOIN tallas ON tallas.id = existencias.id_talla WHERE clave_prenda = ?', [clave_prenda]);
+        const respuesta = await pool.query('SELECT prendas.clave AS Clave, prendas.descripcion AS Prenda, tallas.talla_prenda AS Talla, tallas.id AS id_talla, unidades AS Unidades FROM existencias LEFT JOIN prendas ON prendas.clave = existencias.clave_prenda LEFT JOIN tallas ON tallas.id = existencias.id_talla WHERE clave_prenda = ?', [clave_prenda]);
         if(respuesta.length>0){
             res.json(respuesta);
             return ;
@@ -22,7 +22,7 @@ class ExistenciasController
 
     public async listarUno(req: Request, res: Response): Promise <void>{
         const {clave_prenda, id_talla} = req.params;
-        const respuesta = await pool.query('SELECT prendas.clave AS Clave, prendas.descripcion AS Prenda, tallas.talla_prenda AS Talla, tallas.id, unidades AS Unidades FROM existencias LEFT JOIN prendas ON prendas.clave = existencias.clave_prenda LEFT JOIN tallas ON tallas.id = existencias.id_talla WHERE clave_prenda = ? and id_talla = ?', [clave_prenda, id_talla]);
+        const respuesta = await pool.query('SELECT prendas.clave AS Clave, prendas.descripcion AS Prenda, tallas.talla_prenda AS Talla, tallas.id AS id_talla, unidades AS Unidades FROM existencias LEFT JOIN prendas ON prendas.clave = existencias.clave_prenda LEFT JOIN tallas ON tallas.id = existencias.id_talla WHERE clave_prenda = ? and id_talla = ?', [clave_prenda, id_talla]);
         if(respuesta.length>0){
             res.json(respuesta);
             return ;
